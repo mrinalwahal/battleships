@@ -50,17 +50,18 @@ scaledObject:
     name: cpu-stateful-scaledobject
     namespace: test5
   spec:
-    pollingInterval: 30
     cooldownPeriod: 300
-    minReplicaCount: 1
     maxReplicaCount: 200
+    minReplicaCount: 1
+    pollingInterval: 30
     scaleTargetRef:
       name: stateful
+      kind: StatefulSet
     triggers:
-      - type: cpu
-        metricType: Utilization
-        metadata:
+      - metadata:
           value: "70"
+        metricType: Utilization
+        type: cpu
   
 externalServices: []
 podAnnotations:
@@ -207,4 +208,4 @@ extraEnvs: []
 #  - name: MY_ENVIRONMENT_VAR
 #    value: the_value_goes_here
 
-# Generated at 2023-02-03 05:50:50.765911083 +0000 UTC
+# Generated at 2023-02-03 05:58:52.097333183 +0000 UTC

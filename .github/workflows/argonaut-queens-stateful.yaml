@@ -70,6 +70,8 @@ jobs:
           echo "AWS_ACCESS_KEY_ID=$(cat credentials.json | jq --raw-output '.accessKeyId')" >> $GITHUB_ENV
           echo "AWS_SECRET_ACCESS_KEY=$(cat credentials.json | jq --raw-output '.secretAccessKey')" >> $GITHUB_ENV
           echo "AWS_SESSION_TOKEN=$(cat credentials.json | jq --raw-output '.sessionToken')" >> $GITHUB_ENV
+          echo "AWS_ACCOUNT_ID=$(cat credentials.json | jq --raw-output '.accountId')" >> $GITHUB_ENV
+          echo "AWS_REGION=$(cat credentials.json | jq --raw-output '.region')" >> $GITHUB_ENV
 
       - name: Push to ecr
         uses: argonautdev/aws-ecr-action@v4.1.1
@@ -77,7 +79,7 @@ jobs:
         with:
           access_key_id: ${{ env.AWS_ACCESS_KEY_ID }}
           secret_access_key: ${{ env.AWS_SECRET_ACCESS_KEY }}
-          account_id: 170982004044
+          account_id: ${{ env.AWS_ACCOUNT_ID }}
           repo: argonaut/stateful
           region: us-east-2
           tags: ${{ steps.get_sha.outputs.SHA_SHORT }}

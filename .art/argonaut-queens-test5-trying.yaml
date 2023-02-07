@@ -25,9 +25,9 @@ argonaut:
 persistentStorage:
   []
 
-replicas: 1
-minReplicas: 1
-maxReplicas: 1
+replicas: 0
+minReplicas: 0
+maxReplicas: 0
 resources:
   requests:
     cpu: "500m"
@@ -48,18 +48,56 @@ scaledObject:
     name: cpu-trying-scaledobject
     namespace: test5
   spec:
-    pollingInterval: 30
     cooldownPeriod: 300
-    minReplicaCount: 1
     maxReplicaCount: 200
+    minReplicaCount: 1
+    pollingInterval: 30
     scaleTargetRef:
       name: trying
     triggers:
-      - type: cpu
-        metricType: Utilization
-        metadata:
+      - metadata:
           value: "70"
+        metricType: Utilization
+        type: cpu
   
+# Can only do one of the httpGet and exec handler methods for livenessProbe
+livenessProbe:
+  httpGet:
+    path: /
+    port: 82
+  
+  # exec:
+  #   command:
+  #     - sh
+  #     - -c
+  #     - |
+  #       #!/usr/bin/env sh
+  #       test -f /etc/
+  failureThreshold: 0
+  initialDelaySeconds: 0
+  successThreshold: 0
+  periodSeconds: 0
+  timeoutSeconds: 0
+# Can only do one of the httpGet and exec handler methods for readinessProbe
+readinessProbe:
+  httpGet:
+    path: /
+    port: 82
+  
+  # # Handler 2
+  # exec:
+  #   command:
+  #     - sh
+  #     - -c
+  #     - |
+  #       #!/usr/bin/env sh
+  #       test -f /etc/
+  # Common fields
+  failureThreshold: 0
+  initialDelaySeconds: 0
+  successThreshold: 0
+  periodSeconds: 0
+  timeoutSeconds: 0
 externalServices: []
 podAnnotations:
   {}
@@ -205,4 +243,4 @@ extraEnvs: []
 #  - name: MY_ENVIRONMENT_VAR
 #    value: the_value_goes_here
 
-# Generated at 2023-02-01 09:23:25.962151387 +0000 UTC
+# Generated at 2023-02-07 11:24:50.397529642 +0000 UTC

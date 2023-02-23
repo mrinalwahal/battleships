@@ -5,6 +5,15 @@ image: "170982004044.dkr.ecr.us-east-1.amazonaws.com/argonaut/custom-workflow-fi
 imageTag: "latest"
 
 
+services:
+  - port: 80
+    protocol: "tls-terminated" # tls-passthrough, tls-terminated, tcp, http, grpc need to be supported
+    external:
+      hosts:
+        - "asdasdaiiuiunsd.wah.al"
+      hostPort: 443
+      paths: ["/"]
+
 argonaut:
   env: dev5
   region: us-east-1
@@ -173,4 +182,4 @@ extraEnvs: []
 #  - name: MY_ENVIRONMENT_VAR
 #    value: the_value_goes_here
 
-# Generated at 2023-02-23 10:56:55.81534336 +0000 UTC
+# Generated at 2023-02-23 10:57:57.897225869 +0000 UTC
